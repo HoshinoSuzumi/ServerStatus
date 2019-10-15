@@ -1,6 +1,7 @@
 .background {
 	background: url(../img/tenshi.jpg) no-repeat;
 	background-size: 100%;
+	color: #FFFFFF;
 }
 @media only screen and (min-width: 992px) {
 	.background {
