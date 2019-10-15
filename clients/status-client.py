@@ -1,4 +1,4 @@
-﻿﻿  # -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
 SERVER = "127.0.0.1"
 PORT = 35601
