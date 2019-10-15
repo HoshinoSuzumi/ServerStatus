@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
 SERVER = "127.0.0.1"
-PORT = PORT
+PORT = 35601
 USER = "USER"
 PASSWORD = "USER_PASSWORD"
 INTERVAL = 1  # 更新间隔，单位：秒
@@ -144,9 +144,9 @@ def liuliang():
             if netinfo:
 				if netinfo[0][0] == 'lo' or 'tun' in netinfo[0][0] or netinfo[0][1] == '0' or netinfo[0][9] == '0':
                     continue
-                else:
-                    NET_IN += int(netinfo[0][1])
-                    NET_OUT += int(netinfo[0][9])
+			else:
+				NET_IN += int(netinfo[0][1])
+				NET_OUT += int(netinfo[0][9])
     return NET_IN, NET_OUT
 
 

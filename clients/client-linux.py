@@ -4,12 +4,6 @@
 # 支持操作系统： Linux, OSX, FreeBSD, OpenBSD and NetBSD, both 32-bit and 64-bit architectures
 
 
-SERVER = "127.0.0.1"
-PORT = 35601
-USER = "USER"
-PASSWORD = "USER_PASSWORD"
-INTERVAL = 1  # 更新间隔
-
 import collections
 import json
 import os
@@ -17,6 +11,12 @@ import re
 import socket
 import subprocess
 import time
+
+SERVER = "127.0.0.1"
+PORT = 35601
+USER = "USER"
+PASSWORD = "USER_PASSWORD"
+INTERVAL = 1  # 更新间隔
 
 
 def get_uptime():
