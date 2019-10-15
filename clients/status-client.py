@@ -4,19 +4,16 @@ SERVER = "127.0.0.1"
 PORT = PORT
 USER = "USER"
 PASSWORD = "USER_PASSWORD"
-INTERVAL = 1 #更新间隔，单位：秒
+INTERVAL = 1  # 更新间隔，单位：秒
 
-
-import socket
-import time
-import string
-import math
-import re
-import os
-import json
-import subprocess
 import collections
-import platform
+import json
+import os
+import re
+import socket
+import subprocess
+import time
+
 
 def get_uptime():
 	f = open('/proc/uptime', 'r')
@@ -25,6 +22,7 @@ def get_uptime():
 	uptime = uptime.split('.', 2)
 	time = int(uptime[0])
 	return int(time)
+
 
 def get_memory():
 	re_parser = re.compile(r'^(?P<key>\S*):\s*(?P<value>\d*)\s*kB')
@@ -44,12 +42,16 @@ def get_memory():
 	SwapFree = float(result['SwapFree'])
 	return int(MemTotal), int(MemUsed), int(SwapTotal), int(SwapFree)
 
+
 def get_hdd():
-	p = subprocess.check_output(['df', '-Tlm', '--total', '-t', 'ext4', '-t', 'ext3', '-t', 'ext2', '-t', 'reiserfs', '-t', 'jfs', '-t', 'ntfs', '-t', 'fat32', '-t', 'btrfs', '-t', 'fuseblk', '-t', 'zfs', '-t', 'simfs', '-t', 'xfs']).decode("Utf-8")
+	p = subprocess.check_output(
+		['df', '-Tlm', '--total', '-t', 'ext4', '-t', 'ext3', '-t', 'ext2', '-t', 'reiserfs', '-t', 'jfs', '-t', 'ntfs',
+		 '-t', 'fat32', '-t', 'btrfs', '-t', 'fuseblk', '-t', 'zfs', '-t', 'simfs', '-t', 'xfs']).decode("Utf-8")
 	total = p.splitlines()[-1]
 	used = total.split()[3]
 	size = total.split()[2]
 	return int(size), int(used)
+
 
 def get_load():
 	# system = platform.linux_distribution()
@@ -64,40 +66,48 @@ def get_load():
 	# return float(tmp_load)
 	load = (os.getloadavg()[0] / 2.00) * 100
 	if load > 100:
-	    load = 100
+		load = 100
 	return load
+
 
 def get_time():
 	stat_file = file("/proc/stat", "r")
 	time_list = stat_file.readline().split(' ')[2:6]
 	stat_file.close()
-	for i in range(len(time_list))  :
+	for i in range(len(time_list)):
 		time_list[i] = int(time_list[i])
 	return time_list
+
+
 def delta_time():
 	x = get_time()
 	time.sleep(INTERVAL)
 	y = get_time()
 	for i in range(len(x)):
-		y[i]-=x[i]
+		y[i] -= x[i]
 	return y
+
+
 def get_cpu():
 	t = delta_time()
 	st = sum(t)
 	if st == 0:
 		st = 1
-	result = 100-(t[len(t)-1]*100.00/st)
+	result = 100 - (t[len(t) - 1] * 100.00 / st)
 	return round(result)
+
 
 class Traffic:
 	def __init__(self):
 		self.rx = collections.deque(maxlen=10)
 		self.tx = collections.deque(maxlen=10)
+
 	def get(self):
 		f = open('/proc/net/dev', 'r')
 		net_dev = f.readlines()
 		f.close()
-		avgrx = 0; avgtx = 0
+		avgrx = 0;
+		avgtx = 0
 
 		for dev in net_dev[2:]:
 			dev = dev.split(':')
@@ -109,36 +119,41 @@ class Traffic:
 
 		self.rx.append(avgrx)
 		self.tx.append(avgtx)
-		avgrx = 0; avgtx = 0
+		avgrx = 0;
+		avgtx = 0
 
 		l = len(self.rx)
 		for x in range(l - 1):
-			avgrx += self.rx[x+1] - self.rx[x]
-			avgtx += self.tx[x+1] - self.tx[x]
+			avgrx += self.rx[x + 1] - self.rx[x]
+			avgtx += self.tx[x + 1] - self.tx[x]
 
 		avgrx = int(avgrx / l / INTERVAL)
 		avgtx = int(avgtx / l / INTERVAL)
 
 		return avgrx, avgtx
 
+
 def liuliang():
     NET_IN = 0
     NET_OUT = 0
     with open('/proc/net/dev') as f:
         for line in f.readlines():
-            netinfo = re.findall('([^\s]+):[\s]{0,}(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)', line)
+			netinfo = re.findall(
+				'([^\s]+):[\s]{0,}(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)',
+				line)
             if netinfo:
-                if netinfo[0][0] == 'lo' or 'tun' in netinfo[0][0] or netinfo[0][1]=='0' or netinfo[0][9]=='0':
+				if netinfo[0][0] == 'lo' or 'tun' in netinfo[0][0] or netinfo[0][1] == '0' or netinfo[0][9] == '0':
                     continue
                 else:
                     NET_IN += int(netinfo[0][1])
                     NET_OUT += int(netinfo[0][9])
     return NET_IN, NET_OUT
 
+
 def get_network(ip_version):
-	if(ip_version == 4):
+	if (ip_version == 4):
 		HOST = "ipv4.google.com"
-	elif(ip_version == 6):
+	elif (ip_version == 6):
 		HOST = "ipv6.google.com"
 	try:
 		s = socket.create_connection((HOST, 80), 2)
@@ -146,6 +161,7 @@ def get_network(ip_version):
 	except:
 		pass
 	return False
+
 
 if __name__ == '__main__':
 	socket.setdefaulttimeout(30)
@@ -195,7 +211,7 @@ if __name__ == '__main__':
 					array['online' + str(check_ip)] = get_network(check_ip)
 					timer = 10
 				else:
-					timer -= 1*INTERVAL
+					timer -= 1 * INTERVAL
 
 				array['uptime'] = Uptime
 				array['load'] = Load

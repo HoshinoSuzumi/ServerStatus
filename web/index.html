@@ -9,7 +9,7 @@
 
     <!-- Fix chrome language detection -->
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <meta http-equiv="Content-Language" content="zh" />
+    <meta http-equiv="Content-Language" content="zh"/>
 
     <!-- Styles -->
     <link href="css/core.css" rel="stylesheet">
@@ -27,7 +27,10 @@
             font-weight: normal;
             font-style: normal;
         }
-        th {text-align:center;}
+
+        th {
+            text-align: center;
+        }
     </style>
 
     <!--[if lt IE 9]>
@@ -39,92 +42,92 @@
 </head>
 
 <body>
-        <section id="content" style="text-align: center;">
-                <!-- Content Row -->
-                <section class="background">
-                    <div class="container" style="background: rgba(0, 0, 0, .3);">
-                        <header>
-                            <h1>
-                                <strong style="color: #FFFFFF;">服务器监控</strong>
-                            </h1>
-                        </header>
-                        <div>
-                            <p>
-                                <small>这里显示盒子萌各服务器状态</small>
-                            </p>
+<section id="content" style="text-align: center;">
+    <!-- Content Row -->
+    <section class="background">
+        <div class="container" style="background: rgba(0, 0, 0, .3);">
+            <header>
+                <h1>
+                    <strong style="color: #FFFFFF;">服务器监控</strong>
+                </h1>
+            </header>
+            <div>
+                <p>
+                    <small>这里显示盒子萌各服务器状态</small>
+                </p>
+            </div>
+        </div>
+    </section>
+</section>
+<div class="container">
+    <div id="loading-notice">
+        <div class="progress progress-striped active">
+            <div class="progress-bar progress-bar-warning" style="width: 100%;">加载中...</div>
+        </div>
+        <div style="text-align:center;">
+            如果长时间显示此消息，则服务端不可用
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th id="status4">状态</th>
+            <th id="name">节点</th>
+            <th id="type">类型</th>
+            <th id="location">地域</th>
+            <th id="uptime">在线时间</th>
+            <th id="load">负载</th>
+            <th id="network">网络 ↓|↑</th>
+            <th id="traffic">流量 ↓|↑</th>
+            <th id="cpu">CPU</th>
+            <th id="ram">内存</th>
+            <th id="hdd">磁盘</th>
+        </tr>
+        </thead>
+        <tbody id="servers" style="text-align:center;">
+        <!-- Servers here \o/ -->
+        </tbody>
+    </table>
+
+    <br/>
+    <div id="updated" style="margin-left: 5px;">Updating...</div>
+</div>
+
+<div class="page-section">
+    <div class="container">
+        <div id='cards' class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="panel panel-block panel-block-sm panel-location">
+                    <div class="location-header">
+                        <h3 class="h4"><img src="img/clients/HK.png"> Non <small>Non</small></h3>
+                        <i class="zmdi zmdi-check-circle text-success"></i>
+                    </div>
+                    <div class="location-progress">
+                        <div class="progress progress-sm">
+                            <div class="progress-bar" style="width: 92%;"></div>
                         </div>
                     </div>
-                </section>
-        </section>
-        <div class="container">
-			<div id="loading-notice">
-				<div class="progress progress-striped active">
-					<div class="progress-bar progress-bar-warning" style="width: 100%;">加载中...</div>
-				</div>
-				<div style="text-align:center;">
-					如果长时间显示此消息，则服务端不可用
-				</div>
-			</div>
-
-			<table class="table table-striped">
-				<thead>
-				<tr>
-					<th id="status4">状态</th>
-					<th id="name">节点</th>
-					<th id="type">类型</th>
-					<th id="location">地域</th>
-					<th id="uptime">在线时间</th>
-					<th id="load">负载</th>
-					<th id="network">网络 ↓|↑</th>
-					<th id="traffic">流量 ↓|↑</th>
-					<th id="cpu">CPU</th>
-					<th id="ram">内存</th>
-					<th id="hdd">磁盘</th>
-				</tr>
-				</thead>
-				<tbody id="servers" style="text-align:center;">
-				<!-- Servers here \o/ -->
-				</tbody>
-			</table>
-
-			<br />
-			<div id="updated" style="margin-left: 5px;">Updating...</div>
-		</div>
-
-        <div class="page-section">
-            <div class="container">
-                <div id='cards' class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-4">
-                        <div class="panel panel-block panel-block-sm panel-location">
-                            <div class="location-header">
-                                <h3 class="h4"><img src="img/clients/HK.png"> Non <small>Non</small></h3>
-                                <i class="zmdi zmdi-check-circle text-success"></i>
-                            </div>
-                            <div class="location-progress">
-                                <div class="progress progress-sm">
-                                    <div class="progress-bar" style="width: 92%;"></div>
-                                </div>
-                            </div>
-                            <ul class="location-info list-styled">
-                                <li><span class="list-label">状态:</span> 在线</li>
-                                <li><span class="list-label">负载:</span> 100%</li>
-                            </ul>
-                        </div>
-                    </div>
+                    <ul class="location-info list-styled">
+                        <li><span class="list-label">状态:</span> 在线</li>
+                        <li><span class="list-label">负载:</span> 100%</li>
+                    </ul>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
 
-    <!-- Scripts -->
+<!-- Scripts -->
 
-	<script src="js/jquery-1.10.2.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/serverstatus.js"></script>
-</body>
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/serverstatus.js"></script>
 
 <footer style="text-align:center;">
     <p style="margin-top:3rem;"><a href="https://github.com/boxlab/ServerStatus">Server Status - Hoshino</a></p>
 </footer>
+</body>
 
 </html>
