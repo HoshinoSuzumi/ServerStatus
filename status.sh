@@ -6,7 +6,7 @@ export PATH
 #	System Required: CentOS/Debian/Ubuntu
 #	Description: ServerStatus client + server
 #	Version: Test v0.004
-#	Author: Toyo,Modify by CokeMine
+#	Author: Toyo, improved by RED NENO(boxlab)
 #=================================================
 
 sh_ver="0.0.1"
@@ -64,42 +64,42 @@ check_pid_client(){
 }
 Download_Server_Status_server(){
 	cd "/tmp"
-	wget -N --no-check-certificate "https://github.com/CokeMine/ServerStatus-Hotaru/archive/master.zip"
+	wget -N --no-check-certificate "https://github.com/boxlab/ServerStatus/archive/master.zip"
 	[[ ! -e "master.zip" ]] && echo -e "${Error} ServerStatus 服务端下载失败 !" && exit 1
 	unzip master.zip
 	rm -rf master.zip
-	[[ ! -e "/tmp/ServerStatus-Hotaru-master" ]] && echo -e "${Error} ServerStatus 服务端解压失败 !" && exit 1
-	cd "/tmp/ServerStatus-Hotaru-master/server"
+	[[ ! -e "/tmp/ServerStatus-master" ]] && echo -e "${Error} ServerStatus 服务端解压失败 !" && exit 1
+	cd "/tmp/ServerStatus-master/server"
 	make
-	[[ ! -e "sergate" ]] && echo -e "${Error} ServerStatus 服务端编译失败 !" && cd "${file_1}" && rm -rf "/tmp/ServerStatus-Hotaru-master" && exit 1
+	[[ ! -e "sergate" ]] && echo -e "${Error} ServerStatus 服务端编译失败 !" && cd "${file_1}" && rm -rf "/tmp/ServerStatus-master" && exit 1
 	cd "${file_1}"
 	[[ ! -e "${file}" ]] && mkdir "${file}"
 	if [[ ! -e "${server_file}" ]]; then
 		mkdir "${server_file}"
-		mv "/tmp/ServerStatus-Hotaru-master/server/sergate" "${server_file}/sergate"
-		mv "/tmp/ServerStatus-Hotaru-master/web" "${web_file}"
+		mv "/tmp/ServerStatus-master/server/sergate" "${server_file}/sergate"
+		mv "/tmp/ServerStatus-master/web" "${web_file}"
 	else
 		if [[ -e "${server_file}/sergate" ]]; then
 			mv "${server_file}/sergate" "${server_file}/sergate1"
-			mv "/tmp/ServerStatus-Hotaru-master/server/sergate" "${server_file}/sergate"
+			mv "/tmp/ServerStatus-master/server/sergate" "${server_file}/sergate"
 		else
-			mv "/tmp/ServerStatus-Hotaru-master/server/sergate" "${server_file}/sergate"
-			mv "/tmp/ServerStatus-Hotaru-master/web" "${web_file}"
+			mv "/tmp/ServerStatus-master/server/sergate" "${server_file}/sergate"
+			mv "/tmp/ServerStatus-master/web" "${web_file}"
 		fi
 	fi
 	if [[ ! -e "${server_file}/sergate" ]]; then
 		echo -e "${Error} ServerStatus 服务端移动重命名失败 !"
 		[[ -e "${server_file}/sergate1" ]] && mv "${server_file}/sergate1" "${server_file}/sergate"
-		rm -rf "/tmp/ServerStatus-Hotaru-master"
+		rm -rf "/tmp/ServerStatus-master"
 		exit 1
 	else
 		[[ -e "${server_file}/sergate1" ]] && rm -rf "${server_file}/sergate1"
-		rm -rf "/tmp/ServerStatus-Hotaru-master"
+		rm -rf "/tmp/ServerStatus-master"
 	fi
 }
 Download_Server_Status_client(){
 	cd "/tmp"
-	wget -N --no-check-certificate "https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/clients/status-client.py"
+	wget -N --no-check-certificate "https://raw.githubusercontent.com/boxlab/ServerStatus/master/clients/status-client.py"
 	[[ ! -e "status-client.py" ]] && echo -e "${Error} ServerStatus 客户端下载失败 !" && exit 1
 	cd "${file_1}"
 	[[ ! -e "${file}" ]] && mkdir "${file}"
@@ -126,14 +126,14 @@ Download_Server_Status_client(){
 }
 Service_Server_Status_server(){
 	if [[ ${release} = "centos" ]]; then
-		if ! wget --no-check-certificate "https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/service/server_status_server_centos" -O /etc/init.d/status-server; then
+		if ! wget --no-check-certificate "https://raw.githubusercontent.com/boxlab/ServerStatus/master/service/server_status_server_centos" -O /etc/init.d/status-server; then
 			echo -e "${Error} ServerStatus 服务端服务管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/status-server
 		chkconfig --add status-server
 		chkconfig status-server on
 	else
-		if ! wget --no-check-certificate "https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/service/server_status_server_debian" -O /etc/init.d/status-server; then
+		if ! wget --no-check-certificate "https://raw.githubusercontent.com/boxlab/ServerStatus/master/service/server_status_server_debian" -O /etc/init.d/status-server; then
 			echo -e "${Error} ServerStatus 服务端服务管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/status-server
@@ -143,14 +143,14 @@ Service_Server_Status_server(){
 }
 Service_Server_Status_client(){
 	if [[ ${release} = "centos" ]]; then
-		if ! wget --no-check-certificate "https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/service/server_status_client_centos" -O /etc/init.d/status-client; then
+		if ! wget --no-check-certificate "https://raw.githubusercontent.com/boxlab/ServerStatus/master/service/server_status_client_centos" -O /etc/init.d/status-client; then
 			echo -e "${Error} ServerStatus 客户端服务管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/status-client
 		chkconfig --add status-client
 		chkconfig status-client on
 	else
-		if ! wget --no-check-certificate "https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/service/server_status_client_debian" -O /etc/init.d/status-client; then
+		if ! wget --no-check-certificate "https://raw.githubusercontent.com/boxlab/ServerStatus/master/service/server_status_client_debian" -O /etc/init.d/status-client; then
 			echo -e "${Error} ServerStatus 客户端服务管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/status-client
@@ -200,14 +200,14 @@ Write_server_config(){
 {"servers":
  [
   {
-   "username": "username01",
+   "username": "node1",
    "password": "password",
    "name": "Server 01",
    "type": "KVM",
    "host": "",
-   "location": "Hong Kong",
+   "location": "China",
    "disabled": false,
-   "region": "HK"
+   "region": "CN"
   }
  ]
 }
@@ -349,16 +349,16 @@ Set_type(){
 }
 Set_location(){
 	echo -e "请输入 ServerStatus 服务端要设置的节点位置[location]（支持中文，前提是你的系统和SSH工具支持中文输入）"
-	stty erase '^H' && read -p "(默认: Hong Kong):" location_s
-	[[ -z "$location_s" ]] && location_s="Hong Kong"
+	stty erase '^H' && read -p "(默认: China):" location_s
+	[[ -z "$location_s" ]] && location_s="China"
 	echo && echo "	================================================"
 	echo -e "	节点位置[location]: ${Red_background_prefix} ${location_s} ${Font_color_suffix}"
 	echo "	================================================" && echo
 }
 Set_region(){
 	echo -e "请输入 ServerStatus 服务端要设置的节点区域[region]（用于国旗/区旗图片显示）"
-	read -e -p "(默认: HK):" region_s
-	[[ -z "$region_s" ]] && region_s="HK"
+	read -e -p "(默认: CN):" region_s
+	[[ -z "$region_s" ]] && region_s="N"
 	echo && echo "	================================================"
 	echo -e "	节点位置[region]: ${Red_background_prefix} ${region_s} ${Font_color_suffix}"
 	echo "	================================================" && echo
@@ -680,7 +680,7 @@ Install_caddy(){
 		Set_server "server"
 		Set_server_http_port
 		if [[ ! -e "/usr/local/caddy/caddy" ]]; then
-			wget -N --no-check-certificate https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/caddy/caddy_install.sh
+			wget -N --no-check-certificate https://raw.githubusercontent.com/boxlab/ServerStatus/master/caddy/caddy_install.sh
 			chmod +x caddy_install.sh
 			bash caddy_install.sh install
 			rm -rf caddy_install.sh
@@ -844,7 +844,7 @@ Uninstall_ServerStatus_server(){
 		rm -rf "/etc/init.d/status-server"
 		if [[ -e "/etc/init.d/caddy" ]]; then
 			/etc/init.d/caddy stop
-			wget -N --no-check-certificate https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/caddy/caddy_install.sh
+			wget -N --no-check-certificate https://raw.githubusercontent.com/boxlab/ServerStatus/master/caddy/caddy_install.sh
 			chmod +x caddy_install.sh
 			bash caddy_install.sh uninstall
 			rm -rf caddy_install.sh
@@ -966,7 +966,7 @@ Set_iptables(){
 	fi
 }
 Update_Shell(){
-	sh_new_ver=$(wget --no-check-certificate -qO- -t1 -T3 "https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/status.sh"|grep 'sh_ver="'|awk -F "=" '{print $NF}'|sed 's/\"//g'|head -1) && sh_new_type="github"
+	sh_new_ver=$(wget --no-check-certificate -qO- -t1 -T3 "https://raw.githubusercontent.com/boxlab/ServerStatus/master/status.sh"|grep 'sh_ver="'|awk -F "=" '{print $NF}'|sed 's/\"//g'|head -1) && sh_new_type="github"
 	[[ -z ${sh_new_ver} ]] && echo -e "${Error} 无法链接到 Github !" && exit 0
 	if [[ -e "/etc/init.d/status-client" ]]; then
 		rm -rf /etc/init.d/status-client
@@ -976,7 +976,7 @@ Update_Shell(){
 		rm -rf /etc/init.d/status-server
 		Service_Server_Status_server
 	fi
-	wget -N --no-check-certificate "https://raw.githubusercontent.com/CokeMine/ServerStatus-Hotaru/master/status.sh" && chmod +x status.sh
+	wget -N --no-check-certificate "https://raw.githubusercontent.com/boxlab/ServerStatus/master/status.sh" && chmod +x status.sh
 	echo -e "脚本已更新为最新版本[ ${sh_new_ver} ] !(注意：因为更新方式为直接覆盖当前运行的脚本，所以可能下面会提示一些报错，无视即可)" && exit 0
 }
 menu_client(){
