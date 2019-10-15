@@ -3,15 +3,12 @@
 
 ## 安装
 
-请见：https://www.cokemine.com/serverstatus-hotaru.html
+请移步：[https://redneno.me/2019/ServerStatus-Hoshino/](https://redneno.me/2019/ServerStatus-Hoshino/)
 
 ## 演示
 
 [前往演示站点](https://monitor.boxmoe.cn/)
 
-## 鸣谢： 
+## 鸣谢
+
 * ServerStatus-Toyo：https://github.com/ToyoDAdoubiBackup/ServerStatus-Toyo
-* ServerStatus：https://github.com/BotoX/ServerStatus
-* mojeda: https://github.com/mojeda 
-* mojeda's ServerStatus: https://github.com/mojeda/ServerStatus
-* BlueVM's project: http://www.lowendtalk.com/discussion/comment/169690#Comment_169690
