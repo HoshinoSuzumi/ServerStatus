@@ -6065,9 +6065,9 @@ button.list-group-item-danger.active:focus {
 	-webkit-border-radius:.75rem;
   text-align: left;
 }
-.panel:hover{
-  box-shadow: 5px 5px 5px 0 rgba(46,61,73,.2);
-}
+/*.panel:hover{*/
+/*  box-shadow: 5px 5px 5px 0 rgba(46,61,73,.2);*/
+/*}*/
 .panel-block {
 	padding: 30px;
 }
