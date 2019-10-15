@@ -1,10 +1,4 @@
-﻿# -*- coding: utf-8 -*-
-
-SERVER = "127.0.0.1"
-PORT = 35601
-USER = "apiserver"
-PASSWORD = "apiserver"
-INTERVAL = 1  # 更新间隔，单位：秒
+﻿# coding: utf-8
 
 
 import collections
@@ -14,6 +8,12 @@ import re
 import socket
 import subprocess
 import time
+
+SERVER = "127.0.0.1"
+PORT = 35601
+USER = "apiserver"
+PASSWORD = "apiserver"
+INTERVAL = 1  # 更新间隔，单位：秒
 
 
 def get_uptime():
