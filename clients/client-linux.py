@@ -1,7 +1,10 @@
-# -*- coding: utf-8 -*-
-# Update by : https://github.com/tenyue/ServerStatus
-# 支持Python版本：2.6 to 3.5
-# 支持操作系统： Linux, OSX, FreeBSD, OpenBSD and NetBSD, both 32-bit and 64-bit architectures
+﻿﻿  # -*- coding: utf-8 -*-
+
+SERVER = "127.0.0.1"
+PORT = 35601
+USER = "apiserver"
+PASSWORD = "apiserver"
+INTERVAL = 1  # 更新间隔，单位：秒
 
 
 import collections
@@ -12,12 +15,6 @@ import socket
 import subprocess
 import time
 
-SERVER = "127.0.0.1"
-PORT = 35601
-USER = "USER"
-PASSWORD = "USER_PASSWORD"
-INTERVAL = 1  # 更新间隔
-
 
 def get_uptime():
     f = open('/proc/uptime', 'r')
@@ -26,7 +23,6 @@ def get_uptime():
     uptime = uptime.split('.', 2)
     time = int(uptime[0])
     return int(time)
-
 
 def get_memory():
     re_parser = re.compile(r'^(?P<key>\S*):\s*(?P<value>\d*)\s*kB')
@@ -46,7 +42,6 @@ def get_memory():
     SwapFree = float(result['SwapFree'])
     return int(MemTotal), int(MemUsed), int(SwapTotal), int(SwapFree)
 
-
 def get_hdd():
     p = subprocess.check_output(
         ['df', '-Tlm', '--total', '-t', 'ext4', '-t', 'ext3', '-t', 'ext2', '-t', 'reiserfs', '-t', 'jfs', '-t', 'ntfs',
@@ -55,7 +50,6 @@ def get_hdd():
     used = total.split()[3]
     size = total.split()[2]
     return int(size), int(used)
-
 
 def get_load():
     # system = platform.linux_distribution()
@@ -73,7 +67,6 @@ def get_load():
         load = 100
     return load
 
-
 def get_time():
     stat_file = file("/proc/stat", "r")
     time_list = stat_file.readline().split(' ')[2:6]
@@ -81,8 +74,6 @@ def get_time():
     for i in range(len(time_list)):
         time_list[i] = int(time_list[i])
     return time_list
-
-
 def delta_time():
     x = get_time()
     time.sleep(INTERVAL)
@@ -90,8 +81,6 @@ def delta_time():
     for i in range(len(x)):
         y[i] -= x[i]
     return y
-
-
 def get_cpu():
     t = delta_time()
     st = sum(t)
@@ -99,7 +88,6 @@ def get_cpu():
         st = 1
     result = 100 - (t[len(t) - 1] * 100.00 / st)
     return round(result)
-
 
 class Traffic:
     def __init__(self):
@@ -136,7 +124,6 @@ class Traffic:
 
         return avgrx, avgtx
 
-
 def liuliang():
     NET_IN = 0
     NET_OUT = 0
@@ -153,7 +140,6 @@ def liuliang():
                     NET_OUT += int(netinfo[0][9])
     return NET_IN, NET_OUT
 
-
 def get_network(ip_version):
     if (ip_version == 4):
         HOST = "ipv4.google.com"
@@ -165,7 +151,6 @@ def get_network(ip_version):
     except:
         pass
     return False
-
 
 if __name__ == '__main__':
     socket.setdefaulttimeout(30)
