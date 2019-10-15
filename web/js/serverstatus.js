@@ -85,7 +85,7 @@ function uptime() {
 			'   </div>' +
 			'  </div>' +
 			' <ul class="location-info list-styled">' +
-			'     <li><span class="list-label">Network @network_rxandnetwork_tx</li>' +
+            '     <li><span class="list-label">网络: @network_rxandnetwork_tx</li>' +
 			'     <li><span class="list-label">负载:</span> @load%</li>' +
 			'   </ul>' +
 			'  </div>' +
